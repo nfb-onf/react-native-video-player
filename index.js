@@ -92,6 +92,7 @@ export default class VideoPlayer extends Component {
     this.state = {
       isStarted: props.autoplay,
       isPlaying: props.autoplay,
+      isFullscreen: false,
       width: 200,
       progress: 0,
       isMuted: props.defaultMuted,
@@ -108,6 +109,8 @@ export default class VideoPlayer extends Component {
     this.onLayout = this.onLayout.bind(this);
     this.onStartPress = this.onStartPress.bind(this);
     this.onProgress = this.onProgress.bind(this);
+    this.onFullscreen = this.onFullscreen.bind(this);
+    this.onFullscreenDismissed = this.onFullscreenDismissed.bind(this);
     this.onEnd = this.onEnd.bind(this);
     this.onLoad = this.onLoad.bind(this);
     this.onPlayPress = this.onPlayPress.bind(this);
@@ -154,6 +157,18 @@ export default class VideoPlayer extends Component {
     this.hideControls();
   }
 
+  onFullscreen(event) {
+    this.setState({
+      isFullscreen: true
+    })
+  }
+
+  onFullscreenDismissed(event) {
+    this.setState({
+      isFullscreen: false
+    })
+  }
+
   onProgress(event) {
     if (this.state.isSeeking) {
       return;
@@ -179,9 +194,9 @@ export default class VideoPlayer extends Component {
     this.setState({ progress: 1 });
 
     if (!this.props.loop) {
+      this.player.seek(0)
       this.setState(
         { isPlaying: false },
-        () => this.player.seek(0)
       );
     } else {
       this.player.seek(0);
@@ -216,7 +231,10 @@ export default class VideoPlayer extends Component {
   }
 
   onToggleFullScreen() {
-    this.player.presentFullscreenPlayer();
+    if (this.state.isFullscreen) {
+      this.player.dismissFullscreenPlayer();
+    }
+    else this.player.presentFullscreenPlayer();
   }
 
   onSeekBarLayout({ nativeEvent }) {
@@ -437,7 +455,7 @@ export default class VideoPlayer extends Component {
             />
           </TouchableOpacity>
         )}
-        {(Platform.OS === 'android' || this.props.disableFullscreen) ? null : (
+        {(this.props.disableFullscreen) ? null : (
           <TouchableOpacity onPress={this.onToggleFullScreen} style={customStyles.controlButton}>
             <Icon
               style={[styles.extraControl, customStyles.controlIcon]}
@@ -478,6 +496,8 @@ export default class VideoPlayer extends Component {
           onLoad={this.onLoad}
           source={video}
           resizeMode={resizeMode}
+          onFullscreenPlayerDidPresent={this.onFullscreen}
+          onFullscreenPlayerDidDismiss={this.onFullscreenDismissed}
         />
         <View
           style={[
@@ -493,7 +513,7 @@ export default class VideoPlayer extends Component {
                 this.onPlayPress();
             }}
             onLongPress={() => {
-              if (fullScreenOnLongPress && Platform.OS !== 'android')
+              if (fullScreenOnLongPress)
                 this.onToggleFullScreen();
             }}
           />
