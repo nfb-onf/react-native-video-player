@@ -370,12 +370,16 @@ export default class VideoPlayer extends Component {
 
   renderThumbnail() {
     const { thumbnail, style, customStyles, ...props } = this.props;
+    let resizeBackground = '';
+    if (!this.props.avoidBackgroundResize){
+      resizeBackground = this.getSizeStyles();
+    }
     return (
       <BackgroundImage
         {...props}
         style={[
           styles.thumbnail,
-          this.getSizeStyles(),
+          resizeBackground,
           style,
           customStyles.thumbnail,
         ]}
@@ -589,6 +593,7 @@ VideoPlayer.propTypes = {
     playArrow: Icon.propTypes.style,
   }),
   onEnd: PropTypes.func,
+  avoidPlayerResize: PropTypes.bool,
   onProgress: PropTypes.func,
   onLoad: PropTypes.func,
   onStart: PropTypes.func,
