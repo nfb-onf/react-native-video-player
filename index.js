@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
   overlayButton: {
     flex: 1,
   },
+  playZone: {
+    width: '100%', 
+    aspectRatio:16/9
+  }
 });
 
 export default class VideoPlayer extends Component {
@@ -357,15 +361,19 @@ export default class VideoPlayer extends Component {
   }
 
   renderStartButton() {
-    const { customStyles } = this.props;
-    return (
-      <TouchableOpacity
-        style={[styles.playButton, customStyles.playButton]}
-        onPress={this.onStartPress}
-      >
-        <Icon style={[styles.playArrow, customStyles.playArrow]} name="play-arrow" size={42} />
-      </TouchableOpacity>
-    );
+    const { customStyles, video } = this.props;
+    if (video.uri){
+      return (
+        <TouchableOpacity
+          style={styles.playZone}
+          onPress={this.onStartPress}
+        >
+          <View style={[styles.playButton, customStyles.playButton]}>
+            <Icon style={[styles.playArrow, customStyles.playArrow]} name="play-arrow" size={42} />
+          </View>
+        </TouchableOpacity>
+      );
+    }
   }
 
   renderThumbnail() {
