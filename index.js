@@ -379,7 +379,7 @@ export default class VideoPlayer extends Component {
   renderThumbnail() {
     const { thumbnail, style, customStyles, ...props } = this.props;
     let resizeBackground = '';
-    if (!this.props.avoidBackgroundResize){
+    if (!this.props.avoidPlayerResize){
       resizeBackground = this.getSizeStyles();
     }
     return (
