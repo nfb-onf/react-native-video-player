@@ -369,7 +369,12 @@ export default class VideoPlayer extends Component {
           onPress={this.onStartPress}
         >
           <View style={[styles.playButton, customStyles.playButton]}>
-            <Icon style={[styles.playArrow, customStyles.playArrow]} name="play-arrow" size={42} />
+            {
+            this.props.customPlayIcon ? (
+              this.props.customPlayIcon
+            ) : (
+              <Icon style={[styles.playArrow, customStyles.playArrow]} name="play-arrow" size={42} />
+            )}
           </View>
         </TouchableOpacity>
       );
@@ -581,6 +586,7 @@ VideoPlayer.propTypes = {
   disableSeek: PropTypes.bool,
   pauseOnPress: PropTypes.bool,
   fullScreenOnLongPress: PropTypes.bool,
+  customPlayIcon: PropTypes.object,
   customStyles: PropTypes.shape({
     wrapper: ViewPropTypes.style,
     video: Video.propTypes.style,
