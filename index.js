@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     marginTop: -48,
     flexDirection: 'row',
     alignItems: 'center',
+    zIndex: 10
   },
   playControl: {
     color: 'white',
@@ -79,6 +80,12 @@ const styles = StyleSheet.create({
   seekBarBackground: {
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     height: 3,
+  },
+  overlayButtonContainer: {
+    width: '100%', 
+    height: '100%', 
+    position: 'absolute', 
+    zIndex: 2
   },
   overlayButton: {
     flex: 1,
@@ -517,13 +524,10 @@ export default class VideoPlayer extends Component {
           onFullscreenPlayerDidDismiss={this.onFullscreenDismissed}
         />
         <View
-          style={[
-            this.getSizeStyles(),
-            { marginTop: -this.getSizeStyles().height },
-          ]}
+          style={styles.overlayButtonContainer}
         >
           <TouchableOpacity
-            style={styles.overlayButton}
+            style={[styles.overlayButton]}
             onPress={() => {
               this.showControls();
               if (pauseOnPress)
