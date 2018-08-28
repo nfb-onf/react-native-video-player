@@ -230,6 +230,11 @@ export default class VideoPlayer extends Component {
 
     this.setState({
       isPlaying: !this.state.isPlaying,
+    },
+    () => {
+      if (!this.state.isPlaying && this.props.onPaused) {
+        this.props.onPaused();
+      }
     });
     this.showControls();
   }
@@ -615,6 +620,7 @@ VideoPlayer.propTypes = {
   onProgress: PropTypes.func,
   onLoad: PropTypes.func,
   onStart: PropTypes.func,
+  onPaused: PropTypes.func,
   onPlayPress: PropTypes.func,
   onHideControls: PropTypes.func,
   onShowControls: PropTypes.func,
