@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Image, ImageBackground, Platform, StyleSheet, TouchableOpacity, View, ViewPropTypes } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video'; // eslint-disable-line
+import { CachedImage } from 'react-native-cached-image';
 
-const BackgroundImage = ImageBackground || Image; // fall back to Image if RN < 0.46
+const BackgroundImage = CachedImage || ImageBackground || Image; // fall back to Image if RN < 0.46
 
 const styles = StyleSheet.create({
   preloadingPlaceholder: {
@@ -82,16 +83,16 @@ const styles = StyleSheet.create({
     height: 3,
   },
   overlayButtonContainer: {
-    width: '100%', 
-    height: '100%', 
-    position: 'absolute', 
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
     zIndex: 2
   },
   overlayButton: {
     flex: 1,
   },
   playZone: {
-    width: '100%', 
+    width: '100%',
     aspectRatio:16/9
   }
 });
