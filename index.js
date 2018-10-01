@@ -425,6 +425,7 @@ export default class VideoPlayer extends Component {
           fullWidth ? styles.seekBarFullWidth : {},
           customStyles.seekBar,
           fullWidth ? customStyles.seekBarFullWidth : {},
+          this.state.isFullscreen && !this.state.isControlsVisible ? { display: 'none' } : {}
         ]}
         onLayout={this.onSeekBarLayout}
       >
