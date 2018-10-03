@@ -409,6 +409,7 @@ export default class VideoPlayer extends Component {
           style,
           customStyles.thumbnail,
         ]}
+        activityIndicatorProps={{display: 'none'}} 
         source={thumbnail}
       >
         {this.renderStartButton()}
