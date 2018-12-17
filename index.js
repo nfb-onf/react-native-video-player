@@ -374,21 +374,25 @@ export default class VideoPlayer extends Component {
   }
 
   renderStartButton() {
-    const { customStyles, video } = this.props;
+    const { customStyles, video, isTrailer, customPlayIcon, jsxTrailer } = this.props;
     if (video.uri){
       return (
         <TouchableOpacity
           style={styles.playZone}
           onPress={this.onStartPress}
         >
-          <View style={[styles.playButton, customStyles.playButton]}>
-            {
-            this.props.customPlayIcon ? (
-              this.props.customPlayIcon
-            ) : (
-              <Icon style={[styles.playArrow, customStyles.playArrow]} name="play-arrow" size={42} />
-            )}
-          </View>
+          {isTrailer ? (
+            jsxTrailer
+          ) : (
+            <View style={[styles.playButton, customStyles.playButton]}>
+              {
+              customPlayIcon ? (
+                customPlayIcon
+              ) : (
+                <Icon style={[styles.playArrow, customStyles.playArrow]} name="play-arrow" size={42} />
+              )}
+            </View>
+          )}
         </TouchableOpacity>
       );
     }
@@ -593,6 +597,8 @@ VideoPlayer.propTypes = {
   disableFullscreen: PropTypes.bool,
   loop: PropTypes.bool,
   resizeMode: Video.propTypes.resizeMode,
+  isTrailer: PropTypes.bool,
+  jsxTrailer: PropTypes.object,
   hideControlsOnStart: PropTypes.bool,
   endWithThumbnail: PropTypes.bool,
   disableSeek: PropTypes.bool,
@@ -636,6 +642,7 @@ VideoPlayer.defaultProps = {
   controlsTimeout: 2000,
   loop: false,
   resizeMode: 'contain',
+  isTrailer: false, 
   disableSeek: false,
   pauseOnPress: false,
   fullScreenOnLongPress: false,
