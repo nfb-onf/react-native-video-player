@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Image, ImageBackground, Platform, StyleSheet, TouchableOpacity, View, ViewPropTypes} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video'; // eslint-disable-line
-import { CachedImage } from 'react-native-cached-image';
+import FastImage from 'react-native-fast-image';
 
-const BackgroundImage = CachedImage || ImageBackground || Image; // fall back to Image if RN < 0.46
+const BackgroundImage = FastImage || ImageBackground || Image; // fall back to Image if RN < 0.46
 
 let ViewPropTypesVar;
 
